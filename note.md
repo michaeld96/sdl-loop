@@ -104,3 +104,35 @@ The linker bundles the libraries with their actual implementation.
 To make the SDL library work with our program we will add the following linker flag `clang -Wall -std=c99 ./source/*.c -g3 -lSDL2 -o  main`. Notice that we have `-lSDL2` before the `-o`.
 
 Now we have a working window!
+
+## SDL Rendering
+
+For this project we are first going to set the color of the rendered objects. We can do this with the function `SDL_SetRenderDrawColor()`, and right after that we will call `SDL_RenderClear()` which will clear the current rendering target with the drawing color.
+
+SDL uses a double buffer technique. THe front buffer is what the user sees, and the back buffer is what is being rendered. These two continuously swap so that everything is shown smoothly. This is done with the function `SDL_RenderPresent()`.
+
+## Drawing a Rectangle
+
+```c
+void render()
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    // clear the context of what we just created.
+    SDL_RenderClear(renderer);
+
+    // Start drawing game objects.
+    
+
+    // Draw a rectangle.
+    SDL_Rect ball_rect = {ball.x, ball.y, ball.width, ball.height};
+    // Drawing the ball as white.
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+    // fill the ball.
+    SDL_RenderFillRect(renderer, &ball_rect);
+    // Double buffer.
+    SDL_RenderPresent(renderer);
+}
+```
+
+To draw a "ball" on the screen we need to tell SDL that we want to draw a rectangle. To draw a rectangle, we will make an instance of this ball by `SDL_Rect ball_rect = {x_pos, y_pos, width_of_ball, height_of_ball}`. I have defined these parameters with a `struct`. Then we tell the renderer to color the ball white, then we tell SDL that we want to fill the ball with the color we sent to the renderer, and then we present the ball to the double buffer!
+
