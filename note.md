@@ -102,3 +102,5 @@ When the preprocessor looks at our included files it only sees the header files 
 The linker bundles the libraries with their actual implementation.
 
 To make the SDL library work with our program we will add the following linker flag `clang -Wall -std=c99 ./source/*.c -g3 -lSDL2 -o  main`. Notice that we have `-lSDL2` before the `-o`.
+
+Now we have a working window!
